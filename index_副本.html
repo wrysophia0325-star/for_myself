@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>菜品推荐台</title>
+    <link rel="icon" href="assets/ingredient-board.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-image" src="assets/ingredient-board.svg" alt="">
+          <div>
+            <p class="eyebrow">本地菜谱匹配</p>
+            <h1>菜品推荐台</h1>
+          </div>
+        </div>
+        <button class="ghost-button" id="copyMenuButton" type="button">复制菜单</button>
+      </header>
+
+      <main class="workspace">
+        <section class="control-panel" aria-labelledby="controlsTitle">
+          <div class="section-heading">
+            <h2 id="controlsTitle">食材与偏好</h2>
+            <span id="savedStatus" aria-live="polite"></span>
+          </div>
+
+          <form id="plannerForm" class="planner-form">
+            <div class="field-group">
+              <label for="ingredientsInput">主要食材</label>
+              <div class="input-row">
+                <input id="ingredientsInput" name="ingredients" type="text" autocomplete="off" placeholder="例如：鸡蛋、西红柿、豆腐">
+                <button class="primary-button compact" id="addIngredientsButton" type="button">添加</button>
+              </div>
+              <p class="error-text" id="inputError" aria-live="polite"></p>
+              <div class="chip-list" id="ingredientChips" aria-label="已选择食材"></div>
+            </div>
+
+            <div class="quick-picks" aria-label="常用食材">
+              <button type="button" data-ingredient="鸡蛋">鸡蛋</button>
+              <button type="button" data-ingredient="番茄">番茄</button>
+              <button type="button" data-ingredient="豆腐">豆腐</button>
+              <button type="button" data-ingredient="土豆">土豆</button>
+              <button type="button" data-ingredient="鸡肉">鸡肉</button>
+              <button type="button" data-ingredient="猪肉">猪肉</button>
+              <button type="button" data-ingredient="牛肉">牛肉</button>
+              <button type="button" data-ingredient="虾仁">虾仁</button>
+              <button type="button" data-ingredient="青菜">青菜</button>
+              <button type="button" data-ingredient="面条">面条</button>
+            </div>
+
+            <div class="control-grid">
+              <label class="number-field" for="dishCount">
+                <span>菜品数量</span>
+                <input id="dishCount" name="dishCount" type="number" min="1" max="8" step="1" value="4">
+              </label>
+
+              <fieldset class="segmented-control">
+                <legend>口味偏好</legend>
+                <label><input type="radio" name="taste" value="不限" checked><span>不限</span></label>
+                <label><input type="radio" name="taste" value="家常"><span>家常</span></label>
+                <label><input type="radio" name="taste" value="清淡"><span>清淡</span></label>
+                <label><input type="radio" name="taste" value="下饭"><span>下饭</span></label>
+                <label><input type="radio" name="taste" value="快手"><span>快手</span></label>
+              </fieldset>
+
+              <fieldset class="segmented-control">
+                <legend>时间</legend>
+                <label><input type="radio" name="time" value="不限" checked><span>不限</span></label>
+                <label><input type="radio" name="time" value="15"><span>15 分钟内</span></label>
+                <label><input type="radio" name="time" value="30"><span>30 分钟内</span></label>
+                <label><input type="radio" name="time" value="60"><span>1 小时内</span></label>
+              </fieldset>
+            </div>
+
+            <div class="action-row">
+              <button class="primary-button" type="submit">生成推荐</button>
+              <button class="secondary-button" id="clearButton" type="button">清空</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="result-panel" aria-labelledby="resultsTitle">
+          <div class="section-heading result-heading">
+            <div>
+              <h2 id="resultsTitle">推荐菜单</h2>
+              <p id="resultMeta">等待食材</p>
+            </div>
+            <div class="score-key">
+              <span><b></b>主食材命中</span>
+              <span><b></b>需补充</span>
+            </div>
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <img src="assets/ingredient-board.svg" alt="">
+            <p>先放入几个主要食材，再生成菜单。</p>
+          </div>
+
+          <div class="recipe-grid" id="recommendations"></div>
+
+          <section class="shopping-panel" id="shoppingPanel" hidden>
+            <div class="section-heading">
+              <h2>补充清单</h2>
+              <button class="ghost-button small" id="copyShoppingButton" type="button">复制清单</button>
+            </div>
+            <ul id="shoppingList"></ul>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
